@@ -78,9 +78,11 @@ keys = [
     ),
     Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
-    Key([mod, "shift"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+    Key([mod], "r", lazy.spawn(terminal + " -e lfcd")),
+    Key([mod, "shift"], "r", lazy.spawn(terminal + " -e htop")),
     Key([mod], "d", lazy.spawn("rofi -show-icons -show drun"), desc="drun"),
+    Key([mod, "shift"], "d", lazy.spawn("rofi -show-icons -show run"), desc="run"),
     Key([mod], "w", lazy.spawn(browser), desc="Run browser"),
 ]
 
@@ -97,16 +99,16 @@ for i in groups:
                 desc="Switch to group {}".format(i.name),
             ),
             # mod1 + shift + letter of group = switch to & move focused window to group
-            Key(
-                [mod, "shift"],
-                i.name,
-                lazy.window.togroup(i.name, switch_group=True),
-                desc="Switch to & move focused window to group {}".format(i.name),
-            ),
+            # Key(
+            #     [mod, "shift"],
+            #     i.name,
+            #     lazy.window.togroup(i.name, switch_group=True),
+            #     desc="Switch to & move focused window to group {}".format(i.name),
+            # ),
             # Or, use below if you prefer not to switch to that group.
             # # mod1 + shift + letter of group = move focused window to group
-            # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-            #     desc="move focused window to group {}".format(i.name)),
+            Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
+                desc="move focused window to group {}".format(i.name)),
         ]
     )
 
