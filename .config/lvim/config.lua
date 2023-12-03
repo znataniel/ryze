@@ -4,16 +4,17 @@
 -- Discord: https://discord.com/invite/Xb9B4Ny
 lvim.format_on_save.enabled = true
 require("lvim.lsp.manager").setup("emmet_ls")
+require("lvim.lsp.manager").setup("css_lsp")
 
 
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
   { name = "yapf" },
   { name = "latexindent" },
-  { name = "prettier" }
+  { name = "prettier" },
 }
 
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
-  { name = "eslint_d" }
+  { name = "eslint_d" },
 }
