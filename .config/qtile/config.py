@@ -35,7 +35,7 @@ from qtile_extras.widget.decorations import PowerLineDecoration
 mod = "mod4"
 browser = "thorium-browser"
 terminal = "alacritty"
-wallpaperPath = "~/.local/wp.jpg"
+wallpaperPath = "~/.local/wp"
 
 keys = [
         # A list of available commands that can be bound to keys can be found
@@ -185,7 +185,7 @@ forwslashDecor = {
 
 widget_defaults = dict(
         font="Comic Shanns Mono Nerd Font",
-        fontsize=14,
+        fontsize=12,
         margin_x=8,
         background=colors[0],
         foreground=colors[1],
@@ -196,7 +196,7 @@ screens = [
         Screen(
             wallpaper=wallpaperPath,
             wallpaper_mode="fill",
-            bottom=bar.Bar(
+            top=bar.Bar(
                 [
                     widget.CurrentLayout(
                         background=colors[5],
@@ -218,6 +218,7 @@ screens = [
                         this_current_screen_border=colors[6],
                         this_screen_border=colors[4],
                         ),
+                    widget.Spacer( length=16,),
                     widget.WindowName(
                         foreground=colors[6],
                         **backslashDecor,
@@ -302,6 +303,7 @@ auto_minimize = True
 
 # When using the Wayland backend, this can be used to configure input devices.
 wl_input_rules = {
+
         # Equivalent of xset r rate 300 50
         "type:keyboard": InputConfig(
             kb_repeat_delay=300,
