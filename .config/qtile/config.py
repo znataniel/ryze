@@ -143,22 +143,6 @@ for i in groups:
             desc="move focused window to group {}".format(i.name)),
         ])
 
-layouts = [
-        layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
-        layout.Max(),
-        # Try more layouts by unleashing below layouts.
-        # layout.Stack(num_stacks=2),
-        # layout.Bsp(),
-        # layout.Matrix(),
-        # layout.MonadTall(),
-        # layout.MonadWide(),
-        # layout.RatioTile(),
-        # layout.Tile(),
-        # layout.TreeTab(),
-        # layout.VerticalTile(),
-        # layout.Zoomy(),
-        ]
-
 catppuccinFrappe = [
         ["#303446", "#303446"], # bg
         ["#c6d0f5", "#c6d0f5"], # fg
@@ -172,6 +156,30 @@ catppuccinFrappe = [
         ]
 
 colors = catppuccinFrappe
+
+layout_theme = {
+        "border_width": 4,
+        "margin": 8,
+        "border_focus": colors[8],
+        "border_normal": colors[0]
+        }
+
+layouts = [
+        layout.Columns(**layout_theme),
+        layout.Max(**layout_theme),
+        # Try more layouts by unleashing below layouts.
+        # layout.Stack(num_stacks=2),
+        # layout.Bsp(),
+        # layout.Matrix(),
+        # layout.MonadTall(),
+        # layout.MonadWide(),
+        # layout.RatioTile(),
+        # layout.Tile(),
+        # layout.TreeTab(),
+        # layout.VerticalTile(),
+        # layout.Zoomy(),
+        ]
+
 backslashDecor = {
         "decorations": [
             PowerLineDecoration(path="forward_slash")
