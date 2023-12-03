@@ -209,7 +209,7 @@ screens = [
                     widget.GroupBox(
                         padding_x=4,
                         margin_x=0,
-                        active=colors[1],
+                        active=colors[6],
                         inactive=colors[1],
                         disable_drag=False,
                         highlight_method="line",
