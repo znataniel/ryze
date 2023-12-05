@@ -178,15 +178,15 @@ layout_theme = {
         "border_width": 4,
         "margin": 8,
         "border_focus": colors[8],
-        "border_normal": colors[0]
+        "border_normal": colors[0],
+        "border_on_single": True,
         }
 
 layouts = [
-        layout.Columns(**layout_theme),
-        layout.Max(**layout_theme),
+        # layout.Columns(**layout_theme),
         # Try more layouts by unleashing below layouts.
         # layout.Stack(num_stacks=2),
-        # layout.Bsp(),
+        layout.Bsp(**layout_theme),
         # layout.Matrix(),
         # layout.MonadTall(),
         # layout.MonadWide(),
@@ -195,6 +195,7 @@ layouts = [
         # layout.TreeTab(),
         # layout.VerticalTile(),
         # layout.Zoomy(),
+        layout.Max(**layout_theme),
         ]
 
 # Decoration Widgets
@@ -210,7 +211,7 @@ forwslashDecor = {
         }
 
 widget_defaults = dict(
-        font="Comic Shanns Mono Nerd Font",
+        font="Comic Shanns Mono Nerd Font Bold",
         fontsize=12,
         margin_x=8,
         background=colors[0],
