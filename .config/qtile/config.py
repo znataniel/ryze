@@ -33,7 +33,7 @@ from qtile_extras.widget.decorations import PowerLineDecoration
 
 
 mod = "mod4"
-browser = "thorium-browser"
+browser = "librewolf"
 terminal = "alacritty"
 wallpaperPath = "~/.local/wp"
 
@@ -79,7 +79,7 @@ keys = [
             lazy.layout.grow_down(),
             desc="Grow window down"),
         Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
-        Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
+        Key([mod, "control"], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
         # Toggle between split and unsplit sides of stack.
         # Split = all windows displayed
         # Unsplit = 1 window displayed, like Max layout, but still with
@@ -90,31 +90,37 @@ keys = [
             lazy.layout.toggle_split(),
             desc="Toggle between split and unsplit sides of stack",
             ),
-    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
-    # Toggle between different layouts as defined below
-    Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
-    Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
-    Key(
-            [mod],
-            "f",
-            lazy.window.toggle_fullscreen(),
-            desc="Toggle fullscreen on the focused window",
-            ),
-    Key([mod],
-        "t",
-        lazy.window.toggle_floating(),
-        desc="Toggle floating on the focused window"),
-    Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
-    Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "r", lazy.spawn(terminal + " -e lfcd")),
-    Key([mod, "shift"], "r", lazy.spawn(terminal + " -e htop")),
-    Key([mod], "d", lazy.spawn("rofi -show-icons -show drun"), desc="drun"),
-    Key([mod, "shift"],
-        "d",
-        lazy.spawn("rofi -show-icons -show run"),
-        desc="run"),
-    Key([mod], "w", lazy.spawn(browser), desc="Run browser"),
-    Key([mod], "F4", lazy.spawn(terminal + " -e pulsemixer")),
+        Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+        # Toggle between different layouts as defined below
+        Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
+        Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
+        Key(
+                [mod],
+                "f",
+                lazy.window.toggle_fullscreen(),
+                desc="Toggle fullscreen on the focused window",
+                ),
+        Key([mod],
+            "t",
+            lazy.window.toggle_floating(),
+            desc="Toggle floating on the focused window"),
+
+        Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
+        Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+
+        # Program spawning
+        Key([mod], "backspace", lazy.spawn("sysact")),
+
+        Key([mod], "d", lazy.spawn("rofi -show-icons -show drun"), desc="drun"),
+        Key([mod, "shift"],
+            "d",
+            lazy.spawn("rofi -show-icons -show run"),
+            desc="run"),
+        Key([mod], "m", lazy.spawn(terminal + " -e ncmpcpp")),
+        Key([mod], "r", lazy.spawn(terminal + " -e lf")),
+        Key([mod, "shift"], "r", lazy.spawn(terminal + " -e htop")),
+        Key([mod], "w", lazy.spawn(browser), desc="Run browser"),
+        Key([mod], "F4", lazy.spawn(terminal + " -e pulsemixer")),
 ]
 
 groups = [Group(i) for i in "123456789"]
@@ -180,6 +186,7 @@ layouts = [
         # layout.Zoomy(),
         ]
 
+# Decoration Widgets
 backslashDecor = {
         "decorations": [
             PowerLineDecoration(path="forward_slash")
@@ -198,77 +205,84 @@ widget_defaults = dict(
         background=colors[0],
         foreground=colors[1],
         )
+
 extension_defaults = widget_defaults.copy()
+
+def initWidgs():
+    widgs = [
+        widget.CurrentLayout(
+            background=colors[5],
+            foreground=colors[0],
+            **forwslashDecor,
+        ),
+        widget.Spacer(
+            length=16,
+        ),
+        widget.GroupBox(
+            padding_x=4,
+            margin_x=0,
+            disable_drag=True,
+            use_mouse_wheel=False,
+            highlight_color=colors[0],
+            highlight_method="line",
+            active=colors[6],
+            inactive=colors[1],
+            this_current_screen_border=colors[6],
+            this_screen_border=colors[5],
+            other_current_screen_border=colors[6],
+            other_screen_border=colors[5],
+        ),
+        widget.Spacer( length=16,),
+        widget.WindowName(
+            foreground=colors[6],
+            **backslashDecor,
+        ),
+        # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
+        # widget.Systray(),
+        # widget.StatusNotifier(),
+        widget.CheckUpdates(
+            background=colors[5],
+            colour_have_updates=colors[0],
+            colour_no_updates=colors[0],
+            display_format="Updates: {updates}",
+            no_update_string="All good",
+            **backslashDecor,
+        ),
+        widget.TextBox(
+            margin_x=0,
+            background=colors[6],
+            foreground=colors[0],
+            fmt="Net",
+        ),
+        widget.NetGraph(
+            background=colors[6],
+            border_color=colors[0],
+            graph_color=colors[0],
+            fill_color=colors[0],
+            margin_y = 6,
+            margin_x = 0,
+        ),
+        widget.Spacer(length=8,background=colors[6], **backslashDecor),
+        widget.Clock(
+            format="%Y/%m/%d %a %I:%M:%S %p",
+            background=colors[5],
+            foreground=colors[0],
+        ),
+    ]
+    return widgs
+
 
 screens = [
         Screen(
             wallpaper=wallpaperPath,
             wallpaper_mode="fill",
-            top=bar.Bar(
-                [
-                    widget.CurrentLayout(
-                        background=colors[5],
-                        foreground=colors[0],
-                        **forwslashDecor,
-                        ),
-                    widget.Spacer(
-                        length=16,
-                        ),
-                    widget.GroupBox(
-                        padding_x=4,
-                        margin_x=0,
-                        active=colors[6],
-                        inactive=colors[1],
-                        disable_drag=True,
-                        highlight_method="line",
-                        use_mouse_wheel=False,
-                        highlight_color=colors[0],
-                        this_current_screen_border=colors[6],
-                        this_screen_border=colors[4],
-                        ),
-                    widget.Spacer( length=16,),
-                    widget.WindowName(
-                        foreground=colors[6],
-                        **backslashDecor,
-                        ),
-                    # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-                    # widget.Systray(),
-                    # widget.StatusNotifier(),
-                    widget.CheckUpdates(
-                        background=colors[5],
-                        colour_have_updates=colors[0],
-                        colour_no_updates=colors[0],
-                        display_format="Updates: {updates}",
-                        no_update_string="All good",
-                        **backslashDecor,
-                        ),
-                    widget.TextBox(
-                        margin_x=0,
-                        background=colors[6],
-                        foreground=colors[0],
-                        fmt="Net",
-                        ),
-                    widget.NetGraph(
-                        background=colors[6],
-                        border_color=colors[0],
-                        graph_color=colors[0],
-                        fill_color=colors[0],
-                        margin_y = 6,
-                        margin_x = 0,
-                        ),
-                    widget.Spacer(length=8,background=colors[6], **backslashDecor),
-                    widget.Clock(
-                        format="%Y/%m/%d %a %I:%M:%S %p",
-                        background=colors[5],
-                        foreground=colors[0],
-                        ),
-                    ],
-                36,
-                ),
-            # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
-            # By default we handle these events delayed to already improve performance, however your system might still be struggling
-            # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
-            # x11_drag_polling_rate = 60,
+            top=bar.Bar(widgets = initWidgs(), size=36, ),
+            ),
+
+        Screen(
+            wallpaper=wallpaperPath,
+            wallpaper_mode="fill",
+            top=bar.Bar(widgets = initWidgs(), size=36, ),
             ),
         ]
 
@@ -312,10 +326,14 @@ auto_minimize = True
 # When using the Wayland backend, this can be used to configure input devices.
 wl_input_rules = {
 
-        # Equivalent of xset r rate 300 50
         "type:keyboard": InputConfig(
+            # Equivalent of xset r rate 300 50
             kb_repeat_delay=300,
             kb_repeat_rate=50,
+
+            # Remaps caps and menu to mod4
+            kb_options="caps:super,altwin:menu_win"
+            
             ),
         }
 
