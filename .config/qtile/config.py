@@ -40,7 +40,8 @@ wallpaperPath = "~/.local/wp"
 keys = [
         # A list of available commands that can be bound to keys can be found
         # at https://docs.qtile.org/en/latest/manual/config/lazy.html
-        # Switch between windows
+
+        # Switch focus between windows
         Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
         Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
         Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
@@ -49,6 +50,15 @@ keys = [
             "space",
             lazy.layout.next(),
             desc="Move window focus to other window"),
+
+        # Switch between groups
+        Key([mod], "i", lazy.screen.prev_group(), desc="Switch to group on the left"),
+        Key([mod], "o", lazy.screen.next_group(), desc="Switch to group on the right"),
+
+        # Switch focus between screens
+        Key([mod], "", lazy.prev_screen(), desc="Switch to previous screen"),
+        Key([mod], "Right", lazy.next_screen(), desc="Switch to next screen"),
+
         # Move windows between left/right columns or move up/down in current stack.
         # Moving out of range in Columns layout will create new column.
         Key([mod, "shift"],
@@ -64,6 +74,7 @@ keys = [
             lazy.layout.shuffle_down(),
             desc="Move window down"),
         Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
+
         # Grow windows. If current window is on the edge of screen and direction
         # will be to screen edge - window would shrink.
         Key([mod, "control"],
