@@ -33,7 +33,7 @@ from qtile_extras.widget.decorations import PowerLineDecoration
 
 
 mod = "mod4"
-browser = "librewolf"
+browser = "thorium-browser"
 terminal = "alacritty"
 wallpaperPath = "~/.local/wp"
 
@@ -231,6 +231,8 @@ def initWidgs():
             length=16,
         ),
         widget.GroupBox(
+            font="Comic Shanns Mono Nerd Font",
+            fontsize=14,
             padding_x=4,
             margin_x=0,
             disable_drag=True,
