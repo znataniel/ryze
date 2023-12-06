@@ -46,10 +46,8 @@ keys = [
         Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
         Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
         Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-        Key([mod],
-            "space",
-            lazy.layout.next(),
-            desc="Move window focus to other window"),
+        Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
+        Key([mod], "tab", lazy.group.focus_back(), desc="Move focus to previously focused window"),
 
         # Switch between groups
         Key([mod], "i", lazy.screen.prev_group(), desc="Switch to group on the left"),
@@ -61,61 +59,32 @@ keys = [
 
         # Move windows between left/right columns or move up/down in current stack.
         # Moving out of range in Columns layout will create new column.
-        Key([mod, "shift"],
-            "h",
-            lazy.layout.shuffle_left(),
-            desc="Move window to the left"),
-        Key([mod, "shift"],
-            "l",
-            lazy.layout.shuffle_right(),
-            desc="Move window to the right"),
-        Key([mod, "shift"],
-            "j",
-            lazy.layout.shuffle_down(),
-            desc="Move window down"),
+        Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
+        Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window to the right"),
+        Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
         Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
 
         # Grow windows. If current window is on the edge of screen and direction
         # will be to screen edge - window would shrink.
-        Key([mod, "control"],
-            "h",
-            lazy.layout.grow_left(),
-            desc="Grow window to the left"),
-        Key([mod, "control"],
-            "l",
-            lazy.layout.grow_right(),
-            desc="Grow window to the right"),
-        Key([mod, "control"],
-            "j",
-            lazy.layout.grow_down(),
-            desc="Grow window down"),
+        Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
+        Key([mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"),
+        Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
         Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
         Key([mod, "control"], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
         # Toggle between split and unsplit sides of stack.
         # Split = all windows displayed
         # Unsplit = 1 window displayed, like Max layout, but still with
         # multiple stack panes
-        Key(
-            [mod, "shift"],
-            "Return",
-            lazy.layout.toggle_split(),
-            desc="Toggle between split and unsplit sides of stack",
-            ),
+        # Key( [mod, "shift"], "Return", lazy.layout.toggle_split(), desc="Toggle between split and unsplit sides of stack",),
         Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+
         # Toggle between different layouts as defined below
         Key([mod], "u", lazy.next_layout(), desc="Toggle between layouts"),
         Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
-        Key(
-                [mod],
-                "f",
-                lazy.window.toggle_fullscreen(),
-                desc="Toggle fullscreen on the focused window",
-                ),
-        Key([mod],
-            "t",
-            lazy.window.toggle_floating(),
-            desc="Toggle floating on the focused window"),
+        Key( [mod], "f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen on the focused window",),
+        Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
 
+        # Root methods
         Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
         Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
 
@@ -199,12 +168,12 @@ layouts = [
         ]
 
 # Decoration Widgets
-backslashDecor = {
+rightSideDecor = {
         "decorations": [
             PowerLineDecoration(path="forward_slash")
             ]
         }
-forwslashDecor = {
+leftSideDecor = {
         "decorations": [
             PowerLineDecoration(path="back_slash")
             ]
@@ -225,7 +194,7 @@ def initWidgs():
         widget.CurrentLayout(
             background=colors[5],
             foreground=colors[0],
-            **forwslashDecor,
+            **leftSideDecor,
         ),
         widget.Spacer(
             length=16,
@@ -239,17 +208,18 @@ def initWidgs():
             use_mouse_wheel=False,
             highlight_color=colors[0],
             highlight_method="line",
-            active=colors[6],
+            block_highlight_text_color=colors[6],
+            active=colors[5],
             inactive=colors[1],
             this_current_screen_border=colors[6],
-            this_screen_border=colors[5],
-            other_current_screen_border=colors[6],
+            this_screen_border=colors[6],
+            other_current_screen_border=colors[5],
             other_screen_border=colors[5],
         ),
         widget.Spacer( length=16,),
         widget.WindowName(
             foreground=colors[6],
-            **backslashDecor,
+            **rightSideDecor,
         ),
         # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
         # widget.Systray(),
@@ -260,7 +230,7 @@ def initWidgs():
             colour_no_updates=colors[0],
             display_format="Updates: {updates}",
             no_update_string="All good",
-            **backslashDecor,
+            **rightSideDecor,
         ),
         widget.TextBox(
             margin_x=0,
@@ -276,7 +246,7 @@ def initWidgs():
             margin_y = 6,
             margin_x = 0,
         ),
-        widget.Spacer(length=8,background=colors[6], **backslashDecor),
+        widget.Spacer(length=8,background=colors[6], **rightSideDecor),
         widget.Clock(
             format="%Y/%m/%d %a %I:%M:%S %p",
             background=colors[5],
