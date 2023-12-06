@@ -56,7 +56,7 @@ keys = [
         Key([mod], "o", lazy.screen.next_group(), desc="Switch to group on the right"),
 
         # Switch focus between screens
-        Key([mod], "", lazy.prev_screen(), desc="Switch to previous screen"),
+        Key([mod], "Left", lazy.prev_screen(), desc="Switch to previous screen"),
         Key([mod], "Right", lazy.next_screen(), desc="Switch to next screen"),
 
         # Move windows between left/right columns or move up/down in current stack.
@@ -103,7 +103,7 @@ keys = [
             ),
         Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
         # Toggle between different layouts as defined below
-        Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
+        Key([mod], "u", lazy.next_layout(), desc="Toggle between layouts"),
         Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
         Key(
                 [mod],
@@ -183,12 +183,12 @@ layout_theme = {
         }
 
 layouts = [
-        # layout.Columns(**layout_theme),
+        layout.Columns(**layout_theme),
         # Try more layouts by unleashing below layouts.
         # layout.Stack(num_stacks=2),
-        layout.Bsp(**layout_theme),
+        # layout.Bsp(**layout_theme),
         # layout.Matrix(),
-        # layout.MonadTall(),
+        # layout.MonadTall(**layout_theme),
         # layout.MonadWide(),
         # layout.RatioTile(),
         # layout.Tile(),
