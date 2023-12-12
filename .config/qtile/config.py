@@ -226,27 +226,19 @@ def initWidgs():
         # widget.StatusNotifier(),
         widget.CheckUpdates(
             background=colors[5],
+            foreground=colors[0],
             colour_have_updates=colors[0],
             colour_no_updates=colors[0],
             display_format="Updates: {updates}",
-            no_update_string="All good",
+            no_update_string="No updates",
             **rightSideDecor,
         ),
-        widget.TextBox(
-            margin_x=0,
+        widget.Memory(
             background=colors[6],
             foreground=colors[0],
-            fmt="Net",
+            fmt="MEM:{}",
+            **rightSideDecor,
         ),
-        widget.NetGraph(
-            background=colors[6],
-            border_color=colors[0],
-            graph_color=colors[0],
-            fill_color=colors[0],
-            margin_y = 6,
-            margin_x = 0,
-        ),
-        widget.Spacer(length=8,background=colors[6], **rightSideDecor),
         widget.Clock(
             format="%Y/%m/%d %a %I:%M:%S %p",
             background=colors[5],
