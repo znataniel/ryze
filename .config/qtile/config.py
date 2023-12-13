@@ -29,7 +29,7 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.backend.wayland.inputs import InputConfig
 from qtile_extras import widget
-from qtile_extras.widget.decorations import PowerLineDecoration
+from qtile_extras.widget.decorations import BorderDecoration, PowerLineDecoration
 
 
 mod = "mod4"
@@ -170,18 +170,24 @@ layouts = [
 # Decoration Widgets
 rightSideDecor = {
         "decorations": [
-            PowerLineDecoration(path="forward_slash")
+            PowerLineDecoration(path="arrow_right")
             ]
         }
 leftSideDecor = {
         "decorations": [
-            PowerLineDecoration(path="back_slash")
+            PowerLineDecoration(path="arrow_left")
+            ]
+        }
+
+underlineDecor = {
+        "decorations": [
+            BorderDecoration(border_width = [0, 0, 2, 0], colour=colors[5])
             ]
         }
 
 widget_defaults = dict(
         font="Comic Shanns Mono Nerd Font Bold",
-        fontsize=12,
+        fontsize=14,
         margin_x=8,
         background=colors[0],
         foreground=colors[1],
@@ -194,14 +200,13 @@ def initWidgs():
         widget.CurrentLayout(
             background=colors[5],
             foreground=colors[0],
-            **leftSideDecor,
+			**underlineDecor,
         ),
         widget.Spacer(
             length=16,
         ),
         widget.GroupBox(
             font="Comic Shanns Mono Nerd Font",
-            fontsize=14,
             padding_x=4,
             margin_x=0,
             disable_drag=True,
@@ -219,31 +224,50 @@ def initWidgs():
         widget.Spacer( length=16,),
         widget.WindowName(
             foreground=colors[6],
-            **rightSideDecor,
+			**underlineDecor,
         ),
+        widget.Spacer(length=bar.STRETCH),
         # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
         # widget.Systray(),
         # widget.StatusNotifier(),
+        widget.Volume(
+            background=colors[0],
+            foreground=colors[5],
+            emoji=True,
+            **underlineDecor,
+            ),
+        widget.Spacer(length=16),
         widget.CheckUpdates(
-            background=colors[5],
-            foreground=colors[0],
-            colour_have_updates=colors[0],
-            colour_no_updates=colors[0],
+            background=colors[0],
+            foreground=colors[5],
+            colour_have_updates=colors[5],
+            colour_no_updates=colors[5],
             display_format="Updates: {updates}",
             no_update_string="No updates",
-            **rightSideDecor,
+			**underlineDecor,
         ),
+        widget.Spacer(length=16),
+        widget.CPU(
+            background=colors[0],
+            foreground=colors[5],
+            format="CPU: {load_percent}%",
+			**underlineDecor,
+        ),
+        widget.Spacer(length=16),
         widget.Memory(
-            background=colors[6],
-            foreground=colors[0],
+            background=colors[0],
+            foreground=colors[5],
             fmt="MEM:{}",
-            **rightSideDecor,
+			**underlineDecor,
         ),
+        widget.Spacer(length=16),
         widget.Clock(
             format="%Y/%m/%d %a %I:%M:%S %p",
-            background=colors[5],
-            foreground=colors[0],
+            background=colors[0],
+            foreground=colors[5],
+			**underlineDecor,
         ),
+        widget.Spacer(length=16),
     ]
     return widgs
 
