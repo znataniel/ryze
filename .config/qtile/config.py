@@ -93,8 +93,13 @@ keys = [
         Key([mod,], "bracketleft", lazy.spawn("mpc seek -10"), desc="Backwards 10 sec"),
         Key([mod,], "bracketright", lazy.spawn("mpc seek +10"), desc="Forward 10 sec"),
         Key([mod,], "comma", lazy.spawn("mpc prev"), desc="Previous song"),
+        Key([mod, "shift"], "comma", lazy.spawn("mpc seek 0%"), desc="Jump to beginning of song"),
         Key([mod,], "period", lazy.spawn("mpc next"), desc="Next song"),
 
+        # Volume control commands
+        Key([mod,], "minus", lazy.spawn("wpctl set-volume @DEFAULT_SINK@ 0.1-"), desc="-10 volume"),
+        Key([mod,], "equal", lazy.spawn("wpctl set-volume @DEFAULT_SINK@ 0.1+"), desc="+10 volume"),
+        Key([mod, "shift"], "m", lazy.spawn("wpctl set-mute @DEFAULT_SINK@ toggle"), desc="Toggle sink mute"),
 
         # Program spawning
         Key([mod], "backspace", lazy.spawn("sysact")),
@@ -230,45 +235,40 @@ def initWidgs():
         ),
         widget.Spacer( length=16,),
         widget.WindowName(
+            fmt="🪟 {}",
             foreground=colors[6],
         ),
         widget.Spacer(length=bar.STRETCH),
         # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
         # widget.Systray(),
         # widget.StatusNotifier(),
-        widget.Volume(
-            background=colors[0],
-            foreground=colors[5],
-            emoji=True,
-            **underlineDecor,
-            ),
         widget.Spacer(length=16),
         widget.CheckUpdates(
             background=colors[0],
             foreground=colors[5],
             colour_have_updates=colors[5],
             colour_no_updates=colors[5],
-            display_format="Updates: {updates}",
-            no_update_string="No updates",
+            display_format="📦 {updates}",
+            no_update_string="📦 0",
 			**underlineDecor,
         ),
         widget.Spacer(length=16),
         widget.CPU(
             background=colors[0],
             foreground=colors[5],
-            format="CPU: {load_percent}%",
+            format="🔲 {load_percent}%",
 			**underlineDecor,
         ),
         widget.Spacer(length=16),
         widget.Memory(
             background=colors[0],
             foreground=colors[5],
-            fmt="MEM:{}",
+            fmt="💾{}",
 			**underlineDecor,
         ),
         widget.Spacer(length=16),
         widget.Clock(
-            format="%Y/%m/%d %a %I:%M:%S %p",
+            format="🗓️ %Y/%m/%d %a 🕓 %I:%M:%S %p",
             background=colors[0],
             foreground=colors[5],
 			**underlineDecor,
