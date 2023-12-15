@@ -33,7 +33,7 @@ from qtile_extras.widget.decorations import BorderDecoration, PowerLineDecoratio
 
 
 mod = "mod4"
-browser = "thorium-browser"
+browser = "librewolf"
 terminal = "alacritty"
 wallpaperPath = "~/.local/wp"
 
@@ -87,6 +87,14 @@ keys = [
         # Root methods
         Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
         Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+
+        # MPC commands
+        Key([mod,], "p", lazy.spawn("mpc toggle"), desc="MPC play/pause"),
+        Key([mod,], "bracketleft", lazy.spawn("mpc seek -10"), desc="Backwards 10 sec"),
+        Key([mod,], "bracketright", lazy.spawn("mpc seek +10"), desc="Forward 10 sec"),
+        Key([mod,], "comma", lazy.spawn("mpc prev"), desc="Previous song"),
+        Key([mod,], "period", lazy.spawn("mpc next"), desc="Next song"),
+
 
         # Program spawning
         Key([mod], "backspace", lazy.spawn("sysact")),
@@ -197,14 +205,13 @@ extension_defaults = widget_defaults.copy()
 
 def initWidgs():
     widgs = [
+        widget.Spacer(length=16,),
         widget.CurrentLayout(
-            background=colors[5],
-            foreground=colors[0],
+            background=colors[0],
+            foreground=colors[1],
 			**underlineDecor,
         ),
-        widget.Spacer(
-            length=16,
-        ),
+        widget.Spacer(length=16,),
         widget.GroupBox(
             font="Comic Shanns Mono Nerd Font",
             padding_x=4,
@@ -224,7 +231,6 @@ def initWidgs():
         widget.Spacer( length=16,),
         widget.WindowName(
             foreground=colors[6],
-			**underlineDecor,
         ),
         widget.Spacer(length=bar.STRETCH),
         # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
