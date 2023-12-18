@@ -1,0 +1,10 @@
+#!/bin/sh
+
+wpPath="$HOME/.local/wp"
+
+imagePath="$(readlink -f "$1")" &&
+  [ $(file --mime-type -b "$imagePath" | grep -i "image/*") ] &&
+  ln -sf "$(readlink -f "$1")" "$wpPath" ||
+  echo "ERROR: Selected file is not an image."
+
+qtile cmd-obj -o cmd -f reload_config
