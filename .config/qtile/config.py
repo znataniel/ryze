@@ -25,7 +25,7 @@
 # SOFTWARE.
 
 from libqtile import bar, layout, widget
-from libqtile.config import Click, Drag, Group, Key, Match, Screen
+from libqtile.config import Click, Drag, Group, Key, Match, Screen, KeyChord
 from libqtile.lazy import lazy
 from libqtile.backend.wayland.inputs import InputConfig
 from qtile_extras import widget
@@ -100,6 +100,9 @@ keys = [
         Key([mod,], "minus", lazy.spawn("wpctl set-volume @DEFAULT_SINK@ 0.1-"), desc="-10 volume"),
         Key([mod,], "equal", lazy.spawn("wpctl set-volume @DEFAULT_SINK@ 0.1+"), desc="+10 volume"),
         Key([mod, "shift"], "m", lazy.spawn("wpctl set-mute @DEFAULT_SINK@ toggle"), desc="Toggle sink mute"),
+
+        # Keyboard Layout
+        Key([mod], "F12", lazy.widget["keyboardlayout"].next_keyboard(), desc="Next keyboard layout."),
 
         # Program spawning
         Key([mod], "backspace", lazy.spawn("sysact")),
@@ -236,6 +239,7 @@ def initWidgs():
         widget.Spacer( length=16,),
         widget.WindowName(
             fmt="🪟 {}",
+            empty_group_string="No window :D",
             foreground=colors[6],
         ),
         widget.Spacer(length=bar.STRETCH),
@@ -267,8 +271,16 @@ def initWidgs():
 			**underlineDecor,
         ),
         widget.Spacer(length=16),
+        widget.KeyboardLayout(
+                configured_keyboards=['us', 'es'],
+                fmt="⌨ {}",
+                background=colors[0],
+                foreground=colors[5],
+                **underlineDecor,
+                ),
+        widget.Spacer(length=16),
         widget.Clock(
-            format="🗓️ %Y/%m/%d %a 🕓 %I:%M:%S %p",
+            format="🗓️ %a %Y/%m/%d 🕓 %I:%M:%S %p",
             background=colors[0],
             foreground=colors[5],
 			**underlineDecor,
