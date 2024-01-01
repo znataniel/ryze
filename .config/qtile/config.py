@@ -122,6 +122,14 @@ keys = [
 groups = [Group(i) for i in "123456789"]
 
 for i in groups:
+    match i.name:
+        case "7":
+            i.label = "VM"
+        case "8":
+            i.label = "CHAT"
+        case "9":
+            i.label = "🎶"
+
     keys.extend([
         # mod1 + letter of group = switch to group
         Key(
@@ -203,7 +211,7 @@ underlineDecor = {
 
 widget_defaults = dict(
         font="Comic Shanns Mono Nerd Font Bold",
-        fontsize=14,
+        fontsize=11,
         margin_x=8,
         background=colors[0],
         foreground=colors[1],
@@ -212,80 +220,82 @@ widget_defaults = dict(
 extension_defaults = widget_defaults.copy()
 
 def initWidgs():
+    spacer = widget.Spacer(length = 8)
     widgs = [
-        widget.Spacer(length=16,),
-        widget.CurrentLayout(
-            background=colors[0],
-            foreground=colors[1],
-			**underlineDecor,
-        ),
-        widget.Spacer(length=16,),
-        widget.GroupBox(
-            font="Comic Shanns Mono Nerd Font",
-            padding_x=4,
-            margin_x=0,
-            disable_drag=True,
-            use_mouse_wheel=False,
-            highlight_color=colors[0],
-            highlight_method="line",
-            block_highlight_text_color=colors[6],
-            active=colors[5],
-            inactive=colors[1],
-            this_current_screen_border=colors[6],
-            this_screen_border=colors[6],
-            other_current_screen_border=colors[5],
-            other_screen_border=colors[5],
-        ),
-        widget.Spacer( length=16,),
-        widget.WindowName(
-            fmt="🪟 {}",
-            empty_group_string="No window :D",
-            foreground=colors[6],
-        ),
-        widget.Spacer(length=bar.STRETCH),
-        # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-        # widget.Systray(),
-        # widget.StatusNotifier(),
-        widget.Spacer(length=16),
-        widget.CheckUpdates(
-            background=colors[0],
-            foreground=colors[5],
-            colour_have_updates=colors[5],
-            colour_no_updates=colors[5],
-            display_format="📦 {updates}",
-            no_update_string="📦 0",
-			**underlineDecor,
-        ),
-        widget.Spacer(length=16),
-        widget.CPU(
-            background=colors[0],
-            foreground=colors[5],
-            format="🔲 {load_percent}%",
-			**underlineDecor,
-        ),
-        widget.Spacer(length=16),
-        widget.Memory(
-            background=colors[0],
-            foreground=colors[5],
-            fmt="💾{}",
-			**underlineDecor,
-        ),
-        widget.Spacer(length=16),
-        widget.KeyboardLayout(
+            spacer,
+            widget.CurrentLayout(
+                background=colors[0],
+                foreground=colors[1],
+                **underlineDecor,
+                ),
+            spacer,
+            widget.GroupBox(
+                font="Comic Shanns Mono Nerd Font",
+                padding_x=4,
+                margin_x=0,
+                disable_drag=True,
+                use_mouse_wheel=False,
+                hide_unused=True,
+                highlight_color=colors[0],
+                highlight_method="line",
+                block_highlight_text_color=colors[6],
+                active=colors[5],
+                inactive=colors[1],
+                this_current_screen_border=colors[6],
+                this_screen_border=colors[6],
+                other_current_screen_border=colors[5],
+                other_screen_border=colors[5],
+                ),
+            spacer,
+            widget.WindowName(
+                fmt="🪟 {}",
+                empty_group_string="No window :D",
+                foreground=colors[6],
+                ),
+            # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
+            # widget.Systray(),
+            # widget.StatusNotifier(),
+            spacer,
+            widget.CPU(
+                background=colors[0],
+                foreground=colors[5],
+                format="🔲 {load_percent}%",
+                **underlineDecor,
+                ),
+            spacer,
+            widget.Memory(
+                background=colors[0],
+                foreground=colors[5],
+                fmt="💾{}",
+                **underlineDecor,
+                ),
+            spacer,
+            widget.KeyboardLayout(
                 configured_keyboards=['us', 'es'],
                 fmt="⌨ {}",
                 background=colors[0],
                 foreground=colors[5],
                 **underlineDecor,
                 ),
-        widget.Spacer(length=16),
-        widget.Clock(
-            format="🗓️ %a %Y/%m/%d 🕓 %I:%M:%S %p",
-            background=colors[0],
-            foreground=colors[5],
-			**underlineDecor,
-        ),
-        widget.Spacer(length=16),
+            spacer,
+            widget.Battery(
+                format="{char} {percent:2.0%}",
+                empty_char="🪫",
+                discharge_char="🔋",
+                charge_char="🔌",
+                full_char="⚡",
+                background=colors[0],
+                foreground=colors[5],
+                **underlineDecor,
+                ),
+            spacer,
+            widget.Clock(
+                format="🗓️ %a %m/%d 🕓 %I:%M:%S",
+                background=colors[0],
+                foreground=colors[5],
+                **underlineDecor,
+                ),
+            spacer,
     ]
     return widgs
 
@@ -294,13 +304,13 @@ screens = [
         Screen(
             wallpaper=wallpaperPath,
             wallpaper_mode="fill",
-            top=bar.Bar(widgets = initWidgs(), size=36, ),
+            top=bar.Bar(widgets = initWidgs(), size=24, ),
             ),
 
         Screen(
             wallpaper=wallpaperPath,
             wallpaper_mode="fill",
-            top=bar.Bar(widgets = initWidgs(), size=36, ),
+            top=bar.Bar(widgets = initWidgs(), size=24, ),
             ),
         ]
 
