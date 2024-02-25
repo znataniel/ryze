@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# If the script receives an argument, the option to select screen segment
+# and copy to clipboard is immediately selected.
+# If not, it raises a menu to select desired option
+
+export GRIM_DEFAULT_DIR=$HOME/Pictures/grim
+! [[ -d $GRIM_DEFAULT_DIR ]] && mkdir -p "$GRIM_DEFAULT_DIR"
+
+
+[[ -n $1 ]] && slurp -w 0 | grim -g - - | wl-copy ||
+  case $(printf "Selection\nFull Screen" | rofi -dmenu -l 2 -p "Save to a file: ") in
+    "Selection") slurp -w 0 | grim -g - ;;
+    "Full Screen") grim ;;
+  esac
+
