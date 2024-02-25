@@ -4,8 +4,6 @@ alias grep='grep --color=auto'
 alias e='lvim'
 alias v='lvim'
 alias z='zathura'
-alias ds='thorium-browser "https://app.discord.com"'
-alias wsp='thorium-browser "https://web.whatsapp.com"'
 alias mountPhone="sshfs natan@phone:/storage/emulated/0 -p 8022 ~/phone"
 alias ssLoopback="pw-loopback -m '[ FL FR]' --capture-props='media.class=Audio/Sink node.name=my-sink node.description=ssLoopback' &"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
