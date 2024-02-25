@@ -1,7 +1,0 @@
-style=.config/wofi/style.css
-mode=drun
-normal_window=false
-allow_markup=true
-allow_images=true
-hide_scroll=true
-term=alacritty
