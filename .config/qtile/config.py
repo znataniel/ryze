@@ -116,6 +116,10 @@ keys = [
         Key([mod], "r", lazy.spawn(terminal + " -e lf")),
         Key([mod, "shift"], "r", lazy.spawn(terminal + " -e htop")),
         Key([mod], "w", lazy.spawn(browser), desc="Run browser"),
+        Key([mod, "shift"], "w", lazy.spawn(terminal + " -e nmtui"), desc="Run Network Manager TUI"),
+
+        Key([mod], "backslash", lazy.spawn(terminal + " -e bc")),
+
         Key([mod], "F4", lazy.spawn(terminal + " -e pulsemixer")),
 ]
 
@@ -123,6 +127,8 @@ groups = [Group(i) for i in "123456789"]
 
 for i in groups:
     match i.name:
+        case "6":
+            i.label = "GAME"
         case "7":
             i.label = "VM"
         case "8":
@@ -170,7 +176,7 @@ colors = catppuccinFrappe
 layout_theme = {
         "border_width": 4,
         "margin": 8,
-        "border_focus": colors[8],
+        "border_focus": colors[1],
         "border_normal": colors[0],
         "border_on_single": True,
         }
@@ -205,7 +211,7 @@ leftSideDecor = {
 
 underlineDecor = {
         "decorations": [
-            BorderDecoration(border_width = [0, 0, 2, 0], colour=colors[5])
+            BorderDecoration(border_width = [0, 0, 2, 0], colour=colors[1])
             ]
         }
 
@@ -238,11 +244,10 @@ def initWidgs():
                 hide_unused=True,
                 highlight_color=colors[0],
                 highlight_method="line",
-                block_highlight_text_color=colors[6],
-                active=colors[5],
-                inactive=colors[1],
-                this_current_screen_border=colors[6],
-                this_screen_border=colors[6],
+                block_highlight_text_color=colors[1],
+                active=colors[1],
+                this_current_screen_border=colors[1],
+                this_screen_border=colors[1],
                 other_current_screen_border=colors[5],
                 other_screen_border=colors[5],
                 ),
@@ -250,7 +255,7 @@ def initWidgs():
             widget.WindowName(
                 fmt="🪟 {}",
                 empty_group_string="No window :D",
-                foreground=colors[6],
+                foreground=colors[1],
                 ),
             # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
             # widget.Systray(),
@@ -258,14 +263,14 @@ def initWidgs():
             spacer,
             widget.CPU(
                 background=colors[0],
-                foreground=colors[5],
+                foreground=colors[1],
                 format="🔲 {load_percent}%",
                 **underlineDecor,
                 ),
             spacer,
             widget.Memory(
                 background=colors[0],
-                foreground=colors[5],
+                foreground=colors[1],
                 fmt="💾{}",
                 **underlineDecor,
                 ),
@@ -274,25 +279,26 @@ def initWidgs():
                 configured_keyboards=['us', 'es'],
                 fmt="⌨ {}",
                 background=colors[0],
-                foreground=colors[5],
+                foreground=colors[1],
                 **underlineDecor,
                 ),
             spacer,
             widget.Battery(
                 format="{char} {percent:2.0%}",
+                show_short_text=False,
                 empty_char="🪫",
                 discharge_char="🔋",
                 charge_char="🔌",
                 full_char="⚡",
                 background=colors[0],
-                foreground=colors[5],
+                foreground=colors[1],
                 **underlineDecor,
                 ),
             spacer,
             widget.Clock(
                 format="🗓️ %a %m/%d 🕓 %I:%M:%S",
                 background=colors[0],
-                foreground=colors[5],
+                foreground=colors[1],
                 **underlineDecor,
                 ),
             spacer,
