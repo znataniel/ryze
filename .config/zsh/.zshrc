@@ -3,7 +3,8 @@
 
 # Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
-PS1='%F{magenta}∰ %m %f%F{blue}%~%f $ %F{blue}₍ᐢ..ᐢ₎%f > '
+PS1='%F{blue}%n 󰿈󰿈 %m %f%F{blue}%~%f $ %F{blue}󱩡%f
+-> '
 setopt autocd		# Automatically cd into typed directory.
 stty stop undef		# Disable ctrl-s to freeze terminal.
 setopt interactive_comments
@@ -17,6 +18,12 @@ HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc"
+
+
+# To add directories to PATH with necessary verifications
+add_to_path (){
+  [[ -d "$1" ]] && echo $PATH | grep -Eqi "(:|^)$1(:|$)" && export PATH="$PATH:$1"
+}
 
 # Basic auto/tab complete:
 autoload -U compinit
@@ -77,7 +84,7 @@ bindkey -M vicmd '^[[P' vi-delete-char
 bindkey -M vicmd '^e' edit-command-line
 bindkey -M visual '^[[P' vi-delete
 
-export NVM_DIR="$HOME/.local/share/nvm"
+export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
