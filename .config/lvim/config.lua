@@ -3,13 +3,27 @@
 -- Forum: https://www.reddit.com/r/lunarvim/
 -- Discord: https://discord.com/invite/Xb9B4Ny
 lvim.format_on_save.enabled = true
-require("lvim.lsp.manager").setup("emmet_ls")
-require("lvim.lsp.manager").setup("css_lsp")
 
+lvim.builtin.treesitter.ensure_installed = {
+  "python",
+}
 
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
-  { name = "yapf" },
-  { name = "latexindent" },
-  { name = "prettier" },
+  {
+    name = "black"
+  },
+}
+
+local linters = require "lvim.lsp.null-ls.linters"
+linters.setup {
+  {
+    command = "flake8",
+    args = {
+      "--ignore=E203"
+    },
+    filetypes = {
+      "python"
+    }
+  }
 }
