@@ -25,6 +25,12 @@ add_to_path (){
   [[ -d "$1" ]] && echo $PATH | grep -Eqi "(:|^)$1(:|$)" && export PATH="$PATH:$1"
 }
 
+# Function to return a filename from a file that includes it's file extension.
+# Useful in scripts and small loops.
+get_filename_wo_fext (){
+  echo $(sed "s/\(^.*\)\..*/\1/g" <<< $1)
+}
+
 # Basic auto/tab complete:
 autoload -U compinit
 zstyle ':completion:*' menu select
