@@ -9,7 +9,7 @@ esac
 
 
 case "$(printf "💤 sleep\n🔃 reboot\n🖥️shutdown\n🔒 lock\n🚪 leave $WM\n♻️ renew $WM\n🐻 hibernate" | rofi -dmenu -i -p 'Action: ')" in
-	'💤 sleep') $ctl suspend -i ;;
+	'💤 sleep') $ctl suspend -i && swaylock;;
 	'🔃 reboot') $ctl reboot -i ;;
 	'🖥️shutdown') $ctl poweroff -i ;;
 	'🔒 lock') swaylock ;;
