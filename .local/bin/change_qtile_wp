@@ -1,0 +1,11 @@
+#!/bin/bash
+wp_symlink="$HOME/.local/share/wallpaper"
+
+image_path="$(readlink -f "$1")"
+
+if [[ $(file --mime-type -b "$image_path" | grep -i "image/*") ]] ; then
+  ln -sf "$(readlink -f "$1")" "$wp_symlink"
+  qtile cmd-obj -o screen -f set_wallpaper -a "$image_path" "fill"
+else
+  echo "ERROR: Selected file is not an image." && exit 1
+ fi
