@@ -24,7 +24,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from libqtile import bar, layout, widget
+from libqtile import bar, layout, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, KeyChord
 from libqtile.lazy import lazy
 from libqtile.backend.wayland.inputs import InputConfig
@@ -35,10 +35,18 @@ from qtile_extras.widget.decorations import BorderDecoration, PowerLineDecoratio
 import os
 
 
+@hook.subscribe.client_new
+def make_window_floating_by_title(window):
+    floating_titles = ["bc", "pulsemixer", "popup-term"]
+    if window.name in floating_titles:
+        window.toggle_floating()
+        window.set_size_floating(1024, 720)
+
+
 mod = "mod4"
 browser = os.environ.get("BROWSER", "firefox")
 terminal = os.environ.get("TERMINAL", guess_terminal())
-wallpaperPath = "~/.local/wp"
+wallpaperPath = "~/.local/share/wallpaper"
 
 
 keys = [
@@ -89,7 +97,6 @@ keys = [
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
     # Key( [mod, "shift"], "Return", lazy.layout.toggle_split(), desc="Toggle between split and unsplit sides of stack",),
-    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     # Toggle between different layouts as defined below
     Key([mod], "u", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
@@ -172,6 +179,13 @@ keys = [
         desc="Next keyboard layout.",
     ),
     # Program spawning
+    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+    Key(
+        [mod, "shift"],
+        "Return",
+        lazy.spawn(terminal + " --title popup-term"),
+        desc="Launch terminal",
+    ),
     Key([mod], "backspace", lazy.spawn("sysact")),
     Key([mod], "d", lazy.spawn("rofi -show-icons -show drun"), desc="drun"),
     Key([mod, "shift"], "d", lazy.spawn("rofi -show-icons -show run"), desc="run"),
@@ -191,19 +205,10 @@ keys = [
     Key([mod], "Print", lazy.spawn("grimss")),
 ]
 
-groups = [Group(i) for i in "123456789"]
+group_labels = ["1", "2", "3", "4", "5", "GAME", "VM", "CHAT", "🎶"]
+groups = [Group(i, label=group_labels[int(i) - 1]) for i in "123456789"]
 
 for i in groups:
-    match i.name:
-        case "6":
-            i.label = "GAME"
-        case "7":
-            i.label = "VM"
-        case "8":
-            i.label = "CHAT"
-        case "9":
-            i.label = "🎶"
-
     keys.extend(
         [
             # mod1 + letter of group = switch to group
@@ -280,7 +285,7 @@ widget_defaults = dict(
     foreground=colors[1],
 )
 
-extension_defaults = widget_defaults.copy()
+extension_defaults = widget_defaults
 
 
 def initWidgs():
