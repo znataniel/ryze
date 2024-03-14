@@ -95,4 +95,9 @@ export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Load syntax highlighting; should be last.
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+__zsh_syntax_highlighting="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+[[ -f $__zsh_syntax_highlighting ]] && source $__zsh_syntax_highlighting
+
+# Load git completion for Zsh
+__zsh_git_completion="/usr/share/git-completion/prompt.sh"
+[[ -f $__zsh_git_completion ]] && source $__zsh_git_completion
