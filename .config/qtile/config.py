@@ -192,6 +192,9 @@ keys = [
     Key([mod], "m", lazy.spawn(terminal + " -e ncmpcpp")),
     Key([mod], "r", lazy.spawn(terminal + " -e lf")),
     Key([mod, "shift"], "r", lazy.spawn(terminal + " -e htop")),
+    Key(
+        [mod], "s", lazy.spawn("rofi -show-icons -show window"), desc="Window Switcher"
+    ),
     Key([mod], "w", lazy.spawn(browser), desc="Run browser"),
     Key(
         [mod, "shift"],
