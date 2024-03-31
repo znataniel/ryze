@@ -327,6 +327,7 @@ def init_widgs():
             this_screen_border=colors[1],
             other_current_screen_border=colors[5],
             other_screen_border=colors[5],
+            urgent_border=colors[2],
         ),
         spacer,
         widget.WindowName(
