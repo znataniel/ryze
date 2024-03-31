@@ -3,6 +3,13 @@
 # If the script receives an argument, the option to select screen segment
 # and copy to clipboard is immediately selected.
 # If not, it raises a menu to select desired option
+#
+# If the script is running on X it launches flameshot instead. Got lazy.
+
+if [[ -z $WAYLAND_DISPLAY ]]; then
+  flameshot gui
+  exit 1
+fi
 
 export GRIM_DEFAULT_DIR=$HOME/Pictures/grim
 ! [[ -d $GRIM_DEFAULT_DIR ]] && mkdir -p "$GRIM_DEFAULT_DIR"

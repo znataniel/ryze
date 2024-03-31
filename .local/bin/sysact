@@ -1,7 +1,14 @@
 #!/bin/bash
-
+#
 # A dmenu wrapper script for system functions.
-export WM="Qtile"
+#
+# slock for X and swaylock for Wayland support
+
+
+WM="Qtile"
+
+[[ -z $WAYLAND_DISPLAY  ]] && locker="slock" || locker="swaylock"
+
 case "$(readlink -f /sbin/init)" in
 	*systemd*) ctl='systemctl' ;;
 	*) ctl='loginctl' ;;
@@ -9,10 +16,10 @@ esac
 
 
 case "$(printf "💤 sleep\n🔃 reboot\n🖥️shutdown\n🔒 lock\n🚪 leave $WM\n♻️ renew $WM\n🐻 hibernate" | rofi -dmenu -i -p 'Action: ')" in
-	'💤 sleep') $ctl suspend -i && swaylock;;
+	'💤 sleep') $ctl suspend -i && $locker;;
 	'🔃 reboot') $ctl reboot -i ;;
 	'🖥️shutdown') $ctl poweroff -i ;;
-	'🔒 lock') swaylock ;;
+	'🔒 lock') $locker ;;
 	"🚪 leave $WM") qtile cmd-obj -o cmd -f shutdown ;;
 	"♻️ renew $WM") qtile cmd-obj -o cmd -f reload_config ;;
 	'🐻 hibernate') $ctl hibernate -i ;;
