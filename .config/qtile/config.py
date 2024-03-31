@@ -353,6 +353,15 @@ def init_widgs():
             decorations=underline_deco,
         ),
         spacer,
+        widget.DF(
+            background=colors[0],
+            foreground=colors[1],
+            warn_color=colors[2],
+            fmt="󰆼 {}",
+            decorations=underline_deco,
+            visible_on_warn=False,
+        ),
+        spacer,
         widget.KeyboardLayout(
             configured_keyboards=["us", "es"],
             fmt="⌨ {}",
@@ -371,7 +380,7 @@ def init_widgs():
         #     background=colors[0],
         #     foreground=colors[1],
         #     decorations=underline_deco,
-        #     ),
+        # ),
         widget.Volume(
             background=colors[0],
             decorations=underline_deco,
