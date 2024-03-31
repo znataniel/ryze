@@ -156,11 +156,23 @@ keys = [
     Key(
         [mod],
         "minus",
+        lazy.spawn("wpctl set-volume @DEFAULT_SINK@ 0.01-"),
+        desc="-1 volume",
+    ),
+    Key(
+        [mod, "shift"],
+        "minus",
         lazy.spawn("wpctl set-volume @DEFAULT_SINK@ 0.1-"),
         desc="-10 volume",
     ),
     Key(
         [mod],
+        "equal",
+        lazy.spawn("wpctl set-volume @DEFAULT_SINK@ 0.01+"),
+        desc="+1 volume",
+    ),
+    Key(
+        [mod, "shift"],
         "equal",
         lazy.spawn("wpctl set-volume @DEFAULT_SINK@ 0.1+"),
         desc="+10 volume",
@@ -291,7 +303,7 @@ widget_defaults = dict(
 extension_defaults = widget_defaults
 
 
-def initWidgs():
+def init_widgs():
     spacer = widget.Spacer(length=8)
     widgs = [
         spacer,
@@ -359,7 +371,18 @@ def initWidgs():
         #     foreground=colors[1],
         #     decorations=underline_deco,
         #     ),
-        # spacer,
+        widget.Volume(
+            background=colors[0],
+            decorations=underline_deco,
+            get_volume_command="pamixer --get-volume-human",
+            fmt="🔉 {}",
+        ),
+        spacer,
+        widget.Systray(
+            background=colors[0],
+            decorations=underline_deco,
+        ),
+        spacer,
         widget.Clock(
             format="🗓️ %a %m/%d 🕓 %I:%M:%S",
             background=colors[0],
@@ -372,7 +395,7 @@ def initWidgs():
 
 
 bar_settings = {
-    "widgets": initWidgs(),
+    "widgets": init_widgs(),
     "size": 36,
 }
 screens = [
