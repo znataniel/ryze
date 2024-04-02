@@ -293,7 +293,7 @@ layouts = [
 underline_deco = [BorderDecoration(border_width=[0, 0, 2, 0], colour=colors[1])]
 
 widget_defaults = dict(
-    font="FiraCode Nerd Font Bold",
+    font="monospace bold",
     fontsize=11,
     margin_x=8,
     background=colors[0],
