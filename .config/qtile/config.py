@@ -37,7 +37,7 @@ import os
 
 @hook.subscribe.client_new
 def make_window_floating_by_title(window):
-    floating_titles = ["bc", "pulsemixer", "popup-term"]
+    floating_titles = ["calc", "volume", "popup-term"]
     if window.name in floating_titles:
         window.toggle_floating()
         window.set_size_floating(1024, 720)
@@ -183,6 +183,12 @@ keys = [
         lazy.spawn("wpctl set-mute @DEFAULT_SINK@ toggle"),
         desc="Toggle sink mute",
     ),
+    Key(
+        [mod],
+        "F9",
+        lazy.spawn("wpctl set-mute @DEFAULT_SOURCE@ toggle"),
+        desc="Toggle source mute",
+    ),
     # Keyboard Layout
     Key(
         [mod],
@@ -214,8 +220,8 @@ keys = [
         lazy.spawn(terminal + " -e nmtui"),
         desc="Run Network Manager TUI",
     ),
-    Key([mod], "backslash", lazy.spawn(terminal + " -e bc")),
-    Key([mod], "F4", lazy.spawn(terminal + " -e pulsemixer")),
+    Key([mod], "backslash", lazy.spawn(terminal + " --title='calc' -e 'python'")),
+    Key([mod], "F4", lazy.spawn(terminal + " --title='volume' -e 'pulsemixer'")),
     Key([], "Print", lazy.spawn("grimss cb")),
     Key([mod], "Print", lazy.spawn("grimss")),
 ]
