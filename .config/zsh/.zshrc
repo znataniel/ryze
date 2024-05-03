@@ -1,5 +1,7 @@
 # Created by newuser for 5.9
-# Luke's config for the Zoomer Shell
+# 
+# Original config by lukesmithxyz/voidrice
+# Modified to suit my needs
 
 # Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
@@ -77,7 +79,7 @@ lfcd () {
 }
 bindkey -s '^o' '^ulfcd\n'
 
-bindkey -s '^a' '^ubc -lq\n'
+bindkey -s '^a' '^upython -q\n'
 
 bindkey -s '^f' '^ucd "$(dirname "$(fzf)")"\n'
 
@@ -90,14 +92,15 @@ bindkey -M vicmd '^[[P' vi-delete-char
 bindkey -M vicmd '^e' edit-command-line
 bindkey -M visual '^[[P' vi-delete
 
+# load NVM
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# Load syntax highlighting; should be last.
-__zsh_syntax_highlighting="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-[[ -f $__zsh_syntax_highlighting ]] && source $__zsh_syntax_highlighting
-
 # Load git completion for Zsh
 __zsh_git_completion="/usr/share/git-completion/prompt.sh"
 [[ -f $__zsh_git_completion ]] && source $__zsh_git_completion
+#
+# Load syntax highlighting; should be last
+__zsh_syntax_highlighting="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+[[ -f $__zsh_syntax_highlighting ]] && source $__zsh_syntax_highlighting
