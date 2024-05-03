@@ -293,6 +293,7 @@ layouts = [
     # layout.VerticalTile(),
     # layout.Zoomy(),
     layout.Max(**layout_theme),
+    layout.Floating(**layout_theme),
 ]
 
 # Decoration Widgets
