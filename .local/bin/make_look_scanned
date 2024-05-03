@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# Function to make a document, image or whatever
+# look scanned. Output is $filename.scanmod.pdf
+
+# Helper fn
+get_filename_wo_fext (){
+  echo $(sed "s/\(^.*\)\..*/\1/g" <<< $1)
+}
+
+__output="$(get_filename_wo_fext $1).scanmod.pdf"
+convert -density 150 $1 -rotate "$([ $((RANDOM % 2)) -eq 1 ] && echo -)0.$(($RANDOM % 4 + 5))" -attenuate 0.4 +noise Multiplicative -attenuate 0.03 +noise Multiplicative -sharpen 0x1.0 -colorspace Gray $__output
