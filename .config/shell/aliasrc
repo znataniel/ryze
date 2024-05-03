@@ -3,7 +3,8 @@ alias ll='ls --color=auto -alh'
 alias grep='grep --color=auto'
 alias e=$EDITOR
 alias v=$EDITOR
-alias z='zathura'
+alias z='devour zathura'
+alias sxiv='devour nsxiv'
 alias mountPhone="sshfs natan@phone:/storage/emulated/0 -p 8022 ~/phone"
 alias ssLoopback="pw-loopback -m '[ FL FR]' --capture-props='media.class=Audio/Sink node.name=my-sink node.description=ssLoopback' &"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
