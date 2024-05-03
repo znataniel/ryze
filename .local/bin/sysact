@@ -1,5 +1,9 @@
 #!/bin/bash
 #
+# Original script from lukesmithxyz/voidrice
+# Modified to suit my needs
+#
+#
 # A dmenu wrapper script for system functions.
 #
 # slock for X and swaylock for Wayland support
