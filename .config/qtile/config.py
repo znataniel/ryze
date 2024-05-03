@@ -220,7 +220,7 @@ keys = [
         lazy.spawn(terminal + " -e nmtui"),
         desc="Run Network Manager TUI",
     ),
-    Key([mod], "backslash", lazy.spawn(terminal + " --title='calc' -e 'python'")),
+    Key([mod], "backslash", lazy.spawn(terminal + " --title='calc' -e 'python -q'")),
     Key([mod], "F4", lazy.spawn(terminal + " --title='volume' -e 'pulsemixer'")),
     Key([], "Print", lazy.spawn("grimss cb")),
     Key([mod], "Print", lazy.spawn("grimss")),
@@ -312,6 +312,7 @@ extension_defaults = widget_defaults
 
 def init_widgs():
     spacer = widget.Spacer(length=8)
+
     widgs = [
         spacer,
         widget.CurrentLayout(
@@ -342,9 +343,6 @@ def init_widgs():
             empty_group_string="No window :D",
             foreground=colors[1],
         ),
-        # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-        # widget.Systray(),
-        # widget.StatusNotifier(),
         spacer,
         widget.CPU(
             background=colors[0],
@@ -377,17 +375,6 @@ def init_widgs():
             decorations=underline_deco,
         ),
         spacer,
-        # widget.Battery(
-        #     format="{char} {percent:2.0%}",
-        #     show_short_text=False,
-        #     empty_char="🪫",
-        #     discharge_char="🔋",
-        #     charge_char="🔌",
-        #     full_char="⚡",
-        #     background=colors[0],
-        #     foreground=colors[1],
-        #     decorations=underline_deco,
-        # ),
         widget.Volume(
             background=colors[0],
             decorations=underline_deco,
@@ -408,6 +395,22 @@ def init_widgs():
         ),
         spacer,
     ]
+
+    if os.environ.get("BATTERY_AVAILABLE"):
+        battery_widget = widget.Battery(
+            format="{char} {percent:2.0%}",
+            show_short_text=False,
+            empty_char="🪫",
+            discharge_char="🔋",
+            charge_char="🔌",
+            full_char="⚡",
+            background=colors[0],
+            foreground=colors[1],
+            decorations=underline_deco,
+        )
+        widgs.insert(-2, battery_widget)
+        widgs.insert(-2, spacer)
+
     return widgs
 
 
