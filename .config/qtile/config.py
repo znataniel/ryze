@@ -220,7 +220,15 @@ keys = [
         lazy.spawn(terminal + " -e nmtui"),
         desc="Run Network Manager TUI",
     ),
-    Key([mod], "backslash", lazy.spawn(terminal + " --title='calc' -e 'python -q'")),
+    KeyChord(
+        [mod],
+        "x",
+        [
+            Key([mod], "c", lazy.spawn("localc"), desc="Run Xournal++"),
+            Key([mod], "x", lazy.spawn("xournalpp"), desc="Run Xournal++"),
+        ],
+    ),
+    Key([mod], "backslash", lazy.spawn(terminal + " --title='calc' -e 'python'")),
     Key([mod], "F4", lazy.spawn(terminal + " --title='volume' -e 'pulsemixer'")),
     Key([], "Print", lazy.spawn("grimss cb")),
     Key([mod], "Print", lazy.spawn("grimss")),
@@ -272,8 +280,8 @@ catppuccin_frappe = [
 colors = catppuccin_frappe
 
 layout_theme = {
-    "border_width": 4,
-    "margin": 8,
+    "border_width": 2,
+    "margin": 4,
     "border_focus": colors[1],
     "border_normal": colors[0],
     "border_on_single": True,
@@ -301,10 +309,11 @@ underline_deco = [BorderDecoration(border_width=[0, 0, 2, 0], colour=colors[1])]
 
 widget_defaults = dict(
     font="monospace bold",
-    fontsize=11,
+    fontsize=10,
     margin_x=8,
     background=colors[0],
     foreground=colors[1],
+    # decorations=underline_deco,
 )
 
 extension_defaults = widget_defaults
@@ -318,7 +327,6 @@ def init_widgs():
         widget.CurrentLayout(
             background=colors[0],
             foreground=colors[1],
-            decorations=underline_deco,
         ),
         spacer,
         widget.GroupBox(
@@ -348,14 +356,12 @@ def init_widgs():
             background=colors[0],
             foreground=colors[1],
             format="🔲 {load_percent}%",
-            decorations=underline_deco,
         ),
         spacer,
         widget.Memory(
             background=colors[0],
             foreground=colors[1],
             fmt="💾{}",
-            decorations=underline_deco,
         ),
         spacer,
         widget.DF(
@@ -363,7 +369,6 @@ def init_widgs():
             foreground=colors[1],
             warn_color=colors[2],
             fmt="󰆼 {}",
-            decorations=underline_deco,
             visible_on_warn=False,
         ),
         spacer,
@@ -372,26 +377,22 @@ def init_widgs():
             fmt="⌨ {}",
             background=colors[0],
             foreground=colors[1],
-            decorations=underline_deco,
         ),
         spacer,
         widget.Volume(
             background=colors[0],
-            decorations=underline_deco,
             get_volume_command="pamixer --get-volume-human",
             fmt="🔉 {}",
         ),
         spacer,
         widget.Systray(
             background=colors[0],
-            decorations=underline_deco,
         ),
         spacer,
         widget.Clock(
             format="🗓️ %a %m/%d 🕓 %I:%M:%S",
             background=colors[0],
             foreground=colors[1],
-            decorations=underline_deco,
         ),
         spacer,
     ]
@@ -406,7 +407,6 @@ def init_widgs():
             full_char="⚡",
             background=colors[0],
             foreground=colors[1],
-            decorations=underline_deco,
         )
         widgs.insert(-2, battery_widget)
         widgs.insert(-2, spacer)
@@ -416,7 +416,7 @@ def init_widgs():
 
 bar_settings = {
     "widgets": init_widgs(),
-    "size": 36,
+    "size": 24,
 }
 screens = [
     Screen(
