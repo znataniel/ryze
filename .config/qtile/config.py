@@ -205,8 +205,15 @@ keys = [
         desc="Launch terminal",
     ),
     Key([mod], "backspace", lazy.spawn("sysact")),
-    Key([mod], "d", lazy.spawn("rofi -show-icons -show drun"), desc="drun"),
-    Key([mod, "shift"], "d", lazy.spawn("rofi -show-icons -show run"), desc="run"),
+    Key(
+        [mod], "d", lazy.spawn("rofi -show-icons -monitor -1 -show  drun"), desc="drun"
+    ),
+    Key(
+        [mod, "shift"],
+        "d",
+        lazy.spawn("rofi -show-icons -monitor -1 -show run"),
+        desc="run",
+    ),
     Key([mod], "m", lazy.spawn(terminal + " -e ncmpcpp")),
     Key([mod], "r", lazy.spawn(terminal + " -e lf")),
     Key([mod, "shift"], "r", lazy.spawn(terminal + " -e htop")),
@@ -224,7 +231,8 @@ keys = [
         [mod],
         "x",
         [
-            Key([mod], "c", lazy.spawn("localc"), desc="Run Xournal++"),
+            Key([mod], "c", lazy.spawn("localc"), desc="Run Libreoffice Calc"),
+            Key([mod], "w", lazy.spawn("brave"), desc="Run Brave Browser"),
             Key([mod], "x", lazy.spawn("xournalpp"), desc="Run Xournal++"),
         ],
     ),
@@ -319,7 +327,7 @@ widget_defaults = dict(
 extension_defaults = widget_defaults
 
 
-def init_widgs():
+def init_widgs(is_main=False):
     spacer = widget.Spacer(length=8)
 
     widgs = [
@@ -381,12 +389,9 @@ def init_widgs():
         spacer,
         widget.Volume(
             background=colors[0],
+            foreground=colors[1],
             get_volume_command="pamixer --get-volume-human",
             fmt="🔉 {}",
-        ),
-        spacer,
-        widget.Systray(
-            background=colors[0],
         ),
         spacer,
         widget.Clock(
@@ -411,23 +416,23 @@ def init_widgs():
         widgs.insert(-2, battery_widget)
         widgs.insert(-2, spacer)
 
+    if is_main:
+        systray = widget.Systray(background=colors[0])
+        widgs.insert(-1, systray)
+
     return widgs
 
 
-bar_settings = {
-    "widgets": init_widgs(),
-    "size": 24,
-}
 screens = [
     Screen(
         wallpaper=wallpaperPath,
         wallpaper_mode="fill",
-        top=bar.Bar(**bar_settings),
+        top=bar.Bar(widgets=init_widgs(is_main=True), size=24),
     ),
     Screen(
         wallpaper=wallpaperPath,
         wallpaper_mode="fill",
-        top=bar.Bar(**bar_settings),
+        top=bar.Bar(widgets=init_widgs(), size=24),
     ),
 ]
 
