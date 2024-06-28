@@ -232,6 +232,8 @@ keys = [
         "x",
         [
             Key([mod], "c", lazy.spawn("localc"), desc="Run Libreoffice Calc"),
+            Key([mod], "e", lazy.spawn("emacsclient -c"), desc="Run emacsclient connect"),
+            Key([mod], "r", lazy.spawn("dolphin"), desc="Run GUI file manager"),
             Key([mod], "w", lazy.spawn("brave"), desc="Run Brave Browser"),
             Key([mod], "x", lazy.spawn("xournalpp"), desc="Run Xournal++"),
         ],
