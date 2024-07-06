@@ -29,8 +29,6 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen, KeyChord
 from libqtile.lazy import lazy
 from libqtile.backend.wayland.inputs import InputConfig
 from libqtile.utils import guess_terminal
-from qtile_extras import widget
-from qtile_extras.widget.decorations import BorderDecoration, PowerLineDecoration
 
 import os
 
@@ -232,7 +230,10 @@ keys = [
         "x",
         [
             Key([mod], "c", lazy.spawn("localc"), desc="Run Libreoffice Calc"),
-            Key([mod], "e", lazy.spawn("emacsclient -c"), desc="Run emacsclient connect"),
+            Key(
+                [mod], "e", lazy.spawn("emacsclient -c"), desc="Run emacsclient connect"
+            ),
+            Key([mod], "n", lazy.spawn("neovide"), desc="Run Neovide"),
             Key([mod], "r", lazy.spawn("dolphin"), desc="Run GUI file manager"),
             Key([mod], "w", lazy.spawn("brave"), desc="Run Brave Browser"),
             Key([mod], "x", lazy.spawn("xournalpp"), desc="Run Xournal++"),
@@ -299,23 +300,10 @@ layout_theme = {
 
 layouts = [
     layout.Columns(**layout_theme),
-    # Try more layouts by unleashing below layouts.
-    # layout.Stack(num_stacks=2),
-    # layout.Bsp(**layout_theme),
-    # layout.Matrix(),
-    # layout.MonadTall(**layout_theme),
-    # layout.MonadWide(),
-    # layout.RatioTile(),
-    # layout.Tile(),
-    # layout.TreeTab(),
-    # layout.VerticalTile(),
-    # layout.Zoomy(),
     layout.Max(**layout_theme),
     layout.Floating(**layout_theme),
 ]
 
-# Decoration Widgets
-underline_deco = [BorderDecoration(border_width=[0, 0, 2, 0], colour=colors[1])]
 
 widget_defaults = dict(
     font="monospace bold",
@@ -323,7 +311,6 @@ widget_defaults = dict(
     margin_x=8,
     background=colors[0],
     foreground=colors[1],
-    # decorations=underline_deco,
 )
 
 extension_defaults = widget_defaults
@@ -356,10 +343,15 @@ def init_widgs(is_main=False):
             urgent_border=colors[2],
         ),
         spacer,
-        widget.WindowName(
-            fmt="🪟 {}",
-            empty_group_string="No window :D",
-            foreground=colors[1],
+        widget.TaskList(
+            background=colors[1],
+            foreground=colors[0],
+            border=colors[5],
+            urgent_border=colors[2],
+            highlight_method="block",
+            rounded=False,
+            margin_y=1,
+            margin_x=0,
         ),
         spacer,
         widget.CPU(
