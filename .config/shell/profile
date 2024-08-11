@@ -1,7 +1,7 @@
 export TERMINAL="kitty"
 export BROWSER="librewolf"
-export EDITOR="lvim"
-export VISUAL="lvim"
+export EDITOR="nvim"
+export VISUAL="nvim"
 
 # For xwayland to not lag
 [[ $WAYLAND_DISPLAY ]] && export DISPLAY=":0"

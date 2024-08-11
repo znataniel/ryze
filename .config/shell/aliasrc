@@ -11,3 +11,10 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias pandoca4="pandoc -s -V papersize:a4"
 alias xpaste="xclip -o -sel clip"
 alias mirror_refresh="sudo reflector --latest 5 --sort rate --save /etc/pacman.d/mirrorlist"
+
+
+alias gb="git branch"
+alias gl="git log --oneline"
+alias glt="git log --oneline --graph --all"
+alias gs="git switch -c"
+
