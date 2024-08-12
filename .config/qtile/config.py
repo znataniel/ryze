@@ -308,9 +308,7 @@ layouts = [
 widget_defaults = dict(
     font="monospace bold",
     fontsize=10,
-    margin_x=8,
-    background=colors[0],
-    foreground=colors[1],
+    foreground=colors[1][0],
 )
 
 extension_defaults = widget_defaults
@@ -321,54 +319,40 @@ def init_widgs(is_main=False):
 
     widgs = [
         spacer,
-        widget.CurrentLayout(
-            background=colors[0],
-            foreground=colors[1],
-        ),
+        widget.CurrentLayout(),
         spacer,
         widget.GroupBox(
-            padding_x=4,
-            margin_x=0,
             disable_drag=True,
             use_mouse_wheel=False,
             hide_unused=True,
-            highlight_color=colors[0],
+            highlight_color=colors[0][0]+"05",
             highlight_method="line",
             block_highlight_text_color=colors[1],
             active=colors[1],
-            this_current_screen_border=colors[1],
-            this_screen_border=colors[1],
+            this_current_screen_border=colors[0],
+            this_screen_border=colors[0],
             other_current_screen_border=colors[5],
             other_screen_border=colors[5],
             urgent_border=colors[2],
         ),
         spacer,
         widget.TaskList(
-            background=colors[1],
-            foreground=colors[0],
-            border=colors[5],
-            urgent_border=colors[2],
+            border=colors[1][0]+"40",
+            urgent_border=colors[2][0]+"40",
+            margin=1,
+            border_width=1,
             highlight_method="block",
-            rounded=False,
-            margin_y=1,
-            margin_x=0,
         ),
         spacer,
         widget.CPU(
-            background=colors[0],
-            foreground=colors[1],
             format="🔲 {load_percent}%",
         ),
         spacer,
         widget.Memory(
-            background=colors[0],
-            foreground=colors[1],
             fmt="💾{}",
         ),
         spacer,
         widget.DF(
-            background=colors[0],
-            foreground=colors[1],
             warn_color=colors[2],
             fmt="󰆼 {}",
             visible_on_warn=False,
@@ -377,21 +361,15 @@ def init_widgs(is_main=False):
         widget.KeyboardLayout(
             configured_keyboards=["us", "es"],
             fmt="⌨ {}",
-            background=colors[0],
-            foreground=colors[1],
         ),
         spacer,
         widget.Volume(
-            background=colors[0],
-            foreground=colors[1],
             get_volume_command="pamixer --get-volume-human",
             fmt="🔉 {}",
         ),
         spacer,
         widget.Clock(
             format="🗓️ %a %m/%d 🕓 %I:%M:%S",
-            background=colors[0],
-            foreground=colors[1],
         ),
         spacer,
     ]
@@ -404,14 +382,12 @@ def init_widgs(is_main=False):
             discharge_char="🔋",
             charge_char="🔌",
             full_char="⚡",
-            background=colors[0],
-            foreground=colors[1],
         )
         widgs.insert(-2, battery_widget)
         widgs.insert(-2, spacer)
 
     if is_main:
-        systray = widget.Systray(background=colors[0])
+        systray = widget.Systray()
         widgs.insert(-1, systray)
 
     return widgs
@@ -421,12 +397,8 @@ screens = [
     Screen(
         wallpaper=wallpaperPath,
         wallpaper_mode="fill",
-        top=bar.Bar(widgets=init_widgs(is_main=True), size=24),
-    ),
-    Screen(
-        wallpaper=wallpaperPath,
-        wallpaper_mode="fill",
-        top=bar.Bar(widgets=init_widgs(), size=24),
+        # top=bar.Bar(widgets=init_widgs(is_main=True), size=24, margin=4, background="#00000040"),
+        top=bar.Bar(widgets=init_widgs(is_main=True), size=24, margin=4, background=colors[0][0]+"40"),
     ),
 ]
 
