@@ -325,7 +325,7 @@ def init_widgs(is_main=False):
             disable_drag=True,
             use_mouse_wheel=False,
             hide_unused=True,
-            highlight_color=colors[0][0]+"05",
+            highlight_color=colors[0][0] + "05",
             highlight_method="line",
             block_highlight_text_color=colors[1],
             active=colors[1],
@@ -337,8 +337,8 @@ def init_widgs(is_main=False):
         ),
         spacer,
         widget.TaskList(
-            border=colors[1][0]+"40",
-            urgent_border=colors[2][0]+"40",
+            border=colors[1][0] + "40",
+            urgent_border=colors[2][0] + "40",
             margin=1,
             border_width=1,
             highlight_method="block",
@@ -397,8 +397,12 @@ screens = [
     Screen(
         wallpaper=wallpaperPath,
         wallpaper_mode="fill",
-        # top=bar.Bar(widgets=init_widgs(is_main=True), size=24, margin=4, background="#00000040"),
-        top=bar.Bar(widgets=init_widgs(is_main=True), size=24, margin=4, background=colors[0][0]+"40"),
+        top=bar.Bar(
+            widgets=init_widgs(is_main=True),
+            size=24,
+            margin=4,
+            background=colors[0][0] + "40",
+        ),
     ),
 ]
 
