@@ -89,7 +89,11 @@ keys = [
     ),
     Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
-    Key([mod, "control"], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
+
+    # For floating layouts: next and previous window
+    Key([mod, "control"], "p", lazy.group.prev_window(), desc="Previous window in group"),
+    Key([mod, "control"], "n", lazy.group.next_window(), desc="Next window in group"),
+
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
     # Unsplit = 1 window displayed, like Max layout, but still with
