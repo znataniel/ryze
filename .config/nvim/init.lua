@@ -1,6 +1,7 @@
 vim.opt.linebreak = true
---
---
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+
 -- Makes cursor always block style
 vim.opt.guicursor = ''
 
