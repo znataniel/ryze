@@ -27,7 +27,6 @@
 from libqtile import bar, layout, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, KeyChord
 from libqtile.lazy import lazy
-from libqtile.backend.wayland.inputs import InputConfig
 from libqtile.utils import guess_terminal
 
 import os
@@ -41,10 +40,15 @@ def make_window_floating_by_title(window):
         window.set_size_floating(1024, 720)
 
 
+# Wrapper for lsp
+def get_terminal() -> str:
+    term = guess_terminal()
+    return "alacritty" if term is None else term
+
+
 mod = "mod4"
 browser = os.environ.get("BROWSER", "firefox")
-terminal = os.environ.get("TERMINAL", guess_terminal())
-wallpaperPath = "~/.local/share/wallpaper"
+terminal = os.environ.get("TERMINAL", get_terminal())
 
 
 keys = [
@@ -89,11 +93,11 @@ keys = [
     ),
     Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
-
     # For floating layouts: next and previous window
-    Key([mod, "control"], "p", lazy.group.prev_window(), desc="Previous window in group"),
+    Key(
+        [mod, "control"], "p", lazy.group.prev_window(), desc="Previous window in group"
+    ),
     Key([mod, "control"], "n", lazy.group.next_window(), desc="Next window in group"),
-
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
     # Unsplit = 1 window displayed, like Max layout, but still with
@@ -253,32 +257,22 @@ group_labels = ["1", "2", "3", "4", "5", "GAME", "VM", "CHAT", "🎶"]
 groups = [Group(i, label=group_labels[int(i) - 1]) for i in "123456789"]
 
 for i in groups:
-    keys.extend(
-        [
-            # mod1 + letter of group = switch to group
-            Key(
-                [mod],
-                i.name,
-                lazy.group[i.name].toscreen(),
-                desc="Switch to group {}".format(i.name),
-            ),
-            # mod1 + shift + letter of group = switch to & move focused window to group
-            # Key(
-            #     [mod, "shift"],
-            #     i.name,
-            #     lazy.window.togroup(i.name, switch_group=True),
-            #     desc="Switch to & move focused window to group {}".format(i.name),
-            # ),
-            # Or, use below if you prefer not to switch to that group.
-            # # mod1 + shift + letter of group = move focused window to group
-            Key(
-                [mod, "shift"],
-                i.name,
-                lazy.window.togroup(i.name),
-                desc="move focused window to group {}".format(i.name),
-            ),
-        ]
-    )
+    keys.extend([
+        # mod1 + letter of group = switch to group
+        Key(
+            [mod],
+            i.name,
+            lazy.group[i.name].toscreen(),
+            desc="Switch to group {}".format(i.name),
+        ),
+        # mod1 + shift + letter of group = move focused window to group
+        Key(
+            [mod, "shift"],
+            i.name,
+            lazy.window.togroup(i.name),
+            desc="move focused window to group {}".format(i.name),
+        ),
+    ])
 
 catppuccin_frappe = [
     ["#303446", "#303446"],  # bg
@@ -295,8 +289,8 @@ catppuccin_frappe = [
 colors = catppuccin_frappe
 
 layout_theme = {
-    "border_width": 2,
-    "margin": 4,
+    "border_width": 6,
+    "margin": 0,
     "border_focus": colors[1],
     "border_normal": colors[0],
     "border_on_single": True,
@@ -329,23 +323,16 @@ def init_widgs(is_main=False):
             disable_drag=True,
             use_mouse_wheel=False,
             hide_unused=True,
-            highlight_color=colors[0][0] + "05",
-            highlight_method="line",
-            block_highlight_text_color=colors[1],
             active=colors[1],
-            this_current_screen_border=colors[0],
-            this_screen_border=colors[0],
-            other_current_screen_border=colors[5],
-            other_screen_border=colors[5],
+            this_current_screen_border=colors[1],
             urgent_border=colors[2],
         ),
         spacer,
         widget.TaskList(
-            border=colors[1][0] + "40",
-            urgent_border=colors[2][0] + "40",
-            margin=1,
-            border_width=1,
-            highlight_method="block",
+            border=colors[1],
+            urgent_border=colors[2],
+            icon_size=16,
+            margin=6,
         ),
         spacer,
         widget.CPU(
@@ -388,8 +375,8 @@ def init_widgs(is_main=False):
             full_char="⚡",
         )
         widgs.insert(-2, battery_widget)
-        widgs.insert(-2, spacer)
 
+    # Only add systray on main screen
     if is_main:
         systray = widget.Systray()
         widgs.insert(-1, systray)
@@ -399,13 +386,11 @@ def init_widgs(is_main=False):
 
 screens = [
     Screen(
-        wallpaper=wallpaperPath,
-        wallpaper_mode="fill",
         top=bar.Bar(
             widgets=init_widgs(is_main=True),
-            size=24,
-            margin=4,
-            background=colors[0][0] + "40",
+            size=32,
+            # margin=4,
+            background=colors[0][0],
         ),
     ),
 ]
@@ -449,15 +434,6 @@ reconfigure_screens = True
 # If things like steam games want to auto-minimize themselves when losing
 # focus, should we respect this or not?
 auto_minimize = True
-
-# When using the Wayland backend, this can be used to configure input devices.
-wl_input_rules = {
-    "type:keyboard": InputConfig(
-        # Equivalent of xset r rate 300 50
-        kb_repeat_delay=300,
-        kb_repeat_rate=50,
-    ),
-}
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
 # string besides java UI toolkits; you can see several discussions on the
