@@ -3,15 +3,9 @@ export BROWSER="librewolf"
 export EDITOR="nvim"
 export VISUAL="nvim"
 
-# For xwayland to not lag
-[[ $WAYLAND_DISPLAY ]] && export DISPLAY=":0"
-
 export XDG_CONFIG_HOME="$HOME"/.config
 export XDG_CACHE_HOME="$HOME"/.cache
 export XDG_DATA_HOME="$HOME"/.local/share
 export XDG_STATE_HOME="$HOME"/.local/state
 
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-
-[[ -d $HOME/.local/bin ]] && export PATH="$HOME/.local/bin:$PATH"
-[[ -d $XDG_CONFIG_HOME/emacs/bin ]] && export PATH="$XDG_CONFIG_HOME/emacs/bin:$PATH"

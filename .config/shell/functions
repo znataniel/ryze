@@ -1,0 +1,23 @@
+### File that stores helper functions for my shell
+
+# To add directories to PATH with necessary verifications
+add_to_path() {
+  [[ -d "$1" ]] && ! echo $PATH | grep -Eq "(^|:)$1(:|$)" && export PATH="$PATH:$1"
+}
+
+# Function to return a filename from a file that includes it's file extension.
+# Useful in scripts and small loops.
+get_filename_wo_fext (){
+  echo $(sed "s/\(^.*\)\..*/\1/g" <<< $1)
+}
+
+# Use lf to switch directories and bind it to ctrl-o (it's bound in zshrc)
+lfcd () {
+    tmp="$(mktemp -uq)"
+    trap 'rm -f $tmp >/dev/null 2>&1 && trap - HUP INT QUIT TERM PWR EXIT' HUP INT QUIT TERM PWR EXIT
+    lf -last-dir-path="$tmp" "$@"
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+    fi
+}

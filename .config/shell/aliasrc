@@ -5,9 +5,6 @@ alias e=$EDITOR
 alias v=$EDITOR
 alias z='devour zathura'
 alias sxiv='devour nsxiv'
-alias mountPhone="sshfs natan@phone:/storage/emulated/0 -p 8022 ~/phone"
-alias ssLoopback="pw-loopback -m '[ FL FR]' --capture-props='media.class=Audio/Sink node.name=my-sink node.description=ssLoopback' &"
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias pandoca4="pandoc -s -V papersize:a4"
 alias xpaste="xclip -o -sel clip"
 alias mirror_refresh="sudo reflector --latest 5 --sort rate --save /etc/pacman.d/mirrorlist"
@@ -18,3 +15,4 @@ alias gl="git log --oneline"
 alias glt="git log --oneline --graph --all"
 alias gs="git switch -c"
 
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
