@@ -1,0 +1,40 @@
+{
+    // Zen Mode settings
+    "zenMode.fullScreen": true,
+    "zenMode.hideActivityBar": true,
+    "zenMode.hideStatusBar": true,
+    "zenMode.hideLineNumbers": false,
+    "zenMode.restore": true,
+    
+    // Core UI elements
+    "window.menuBarVisibility": "toggle",
+    "editor.minimap.enabled": false,
+    "explorer.openEditors.visible": 1,
+    "workbench.statusBar.visible": true,
+    
+    // Disable Git
+    "git.enabled": false,
+    "git.decorations.enabled": false,
+    "git.autorefresh": false,
+    "git.countBadge": "off",
+    
+    // Disable debugging
+    "debug.toolBarLocation": "hidden",
+    "debug.internalConsoleOptions": "neverOpen",
+    "debug.openDebug": "neverOpen",
+    "debug.showInStatusBar": "never",
+    
+    // Disable other distractions
+    "problems.decorations.enabled": false,
+    "scm.diffDecorations": "none",
+    "workbench.editor.showTabs": "multiple",
+    "terminal.integrated.showLinkHover": false,
+    "workbench.activityBar.location": "hidden",
+    "haskell.manageHLS": "GHCup",
+    "workbench.editorAssociations": {
+      "*.pdf": "latex-workshop-pdf-hook"
+    },
+
+    "vim.useSystemClipboard": true,
+    "workbench.colorTheme": "Gruvbox Dark Medium"
+  }

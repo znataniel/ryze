@@ -1,0 +1,85 @@
+// Place your key bindings in this file to override the defaults
+[
+  // Zen mode toggle
+  {
+    "key": "ctrl+k z",
+    "command": "workbench.action.toggleZenMode"
+  },
+  // File explorer and extensions
+  {
+    "key": "ctrl+e",
+    "command": "workbench.view.explorer"
+  },
+  {
+    "key": "ctrl+shift+e",
+    "command": "workbench.view.extensions"
+  },
+  // LSP suggestions navigation
+  {
+    "key": "ctrl+n",
+    "command": "selectNextSuggestion",
+    "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+  },
+  {
+    "key": "ctrl+p",
+    "command": "selectPrevSuggestion",
+    "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+  },
+  {
+    "key": "ctrl+y",
+    "command": "acceptSelectedSuggestion",
+    "when": "suggestWidgetVisible && textInputFocus"
+  },
+  // Vim-style pane navigation with Ctrl+W
+  {
+    "key": "ctrl+w h",
+    "command": "workbench.action.focusSideBar"
+  },
+  {
+    "key": "ctrl+w l",
+    "command": "workbench.action.focusActiveEditorGroup"
+  },
+  {
+    "key": "ctrl+w j",
+    "command": "workbench.action.terminal.focus"
+  },
+  {
+    "key": "ctrl+w k",
+    "command": "workbench.action.focusActiveEditorGroup"
+  },
+  // Navigate between editor groups (split panes) in main panel
+  {
+    "key": "ctrl+w ctrl+h",
+    "command": "workbench.action.focusPreviousGroup",
+    "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+w ctrl+l",
+    "command": "workbench.action.focusNextGroup",
+    "when": "editorFocus"
+  },
+  // Alternative navigation when in terminal/panel area
+  {
+    "key": "ctrl+w k",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "terminalFocus || panelFocus"
+  },
+  {
+    "key": "ctrl+w h",
+    "command": "workbench.action.focusSideBar",
+    "when": "terminalFocus || panelFocus"
+  },
+  // Tab navigation and managament
+  {
+    "key": "ctrl+w n",
+    "command": "workbench.action.nextEditor"
+  },
+  {
+    "key": "ctrl+w p",
+    "command": "workbench.action.previousEditor"
+  },
+  {
+    "key": "ctrl+w x",
+    "command": "workbench.action.closeActiveEditor"
+  }
+]
