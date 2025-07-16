@@ -15,4 +15,8 @@ alias gl="git log --oneline"
 alias glt="git log --oneline --graph --all"
 alias gs="git switch -c"
 
+alias tls="tmux ls"
+alias ta="tmux attach -t"
+alias tns="tmux new-session -A -s"
+
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
