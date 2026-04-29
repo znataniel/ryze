@@ -1,5 +1,5 @@
 export TERMINAL="kitty"
-export BROWSER="librewolf"
+export BROWSER="firefox"
 export EDITOR="nvim"
 export VISUAL="nvim"
 
