@@ -1,11 +1,9 @@
 ### Helper functions for shell.
 
-# Add directories to PATH with necessary verifications
 add_to_path() {
   [[ -d "$1" ]] && ! echo $PATH | grep -Eq "(^|:)$1(:|$)" && export PATH="$PATH:$1"
 }
 
-# Return a filename from a file that includes it's file extension.
 get_filename_wo_fext (){
   echo $(sed "s/\(^.*\)\..*/\1/g" <<< $1)
 }

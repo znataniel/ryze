@@ -1,17 +1,24 @@
-alias ls='ls --color=auto -h'
-alias ll='ls --color=auto -alh'
-alias grep='grep --color=auto'
 alias e=$EDITOR
 alias v=$EDITOR
+alias d='docker'
+alias k='kubectl'
+alias g='git'
 
+alias gb='git branch'
+alias gl='git log --oneline'
+alias glt='git log --oneline --graph --all'
+alias gs='git status'
+alias gc='git commit'
+alias ga='git add'
+alias gd='git diff'
+alias gpo='git push origin'
 
-alias gb="git branch"
-alias gl="git log --oneline"
-alias glt="git log --oneline --graph --all"
-alias gs="git switch -c"
+alias dps='docker ps'
+alias dc='docker container'
+alias dn='docker network'
 
-alias tls="tmux ls"
-alias ta="tmux attach -t"
-alias tns="tmux new-session -A -s"
+alias tls='tmux ls'
+alias ta='tmux attach -t'
+alias tns='tmux new-session -A -s'
 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
